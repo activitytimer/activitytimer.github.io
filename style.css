@@ -1,0 +1,57 @@
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,700");
+
+@font-face {
+  font-family: "oxygen";
+  src: url(./font/Quark-Light.otf) format("opentype");
+}
+
+@font-face {
+  font-family: "prime";
+  src: url(./font/Prime-Regular.otf) format("opentype");
+}
+
+
+@font-face {
+  font-family: "7seg";
+  src: url(./font/7seg.ttf) format("truetype");
+}
+
+html {
+  font-family: "oxygen";
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: #dddddd;
+  color: #e0e0e0
+}
+
+h1 {
+  color: #f0f0f0;
+}
+#clock {
+  text-align: center;
+  padding: 50px;
+  padding-top: 5px;
+  margin: 25px;
+  background-color: #888888;
+  border-style: solid;
+  border-width: 5px;
+  border-color: #666666;
+}
+
+#time {
+  font-family: "7seg";
+  font-size: 108px;
+  color: #f04331
+}
+#millisec {
+  font-size: 48px;
+  padding-left: 10px;
+}
+#tag {
+  padding-left: 50px;
+  font-size: 24px;
+  color: #909090;
+}

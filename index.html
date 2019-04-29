@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="./jquery.js"></script>
+    <script src="./index.js"></script>
+    <link rel="stylesheet" href="./style.css"></link>
+    <title id="pageTitle"></title>
+  </head>
+  <body>
+    <div id="clock">
+      <h1 id="contentTitle"></h1>
+      <div id="time"><span id="hours" contenteditable="true" onkeypress="return (this.innerText.length <= 1)" onselect="document.execCommand('selectAll',false,null)">00</span>:<span id="minutes" contenteditable="true" onkeypress="return (this.innerText.length <= 1)" onselect="document.execCommand('selectAll',false,null)">00</span>:<span id="seconds" contenteditable="true" onkeypress="return (this.innerText.length <= 1)" onselect="document.execCommand('selectAll',false,null)">00</span>.<span id="millisec">00</span></div><br/>
+      <input id="timeSetButton" type="button" value="Start"/><input id="timeStopButton" type="button" value="Stop"/><input id="timeResetButton" type="button" value="Reset"/><input id="timeClearButton" type="button" value="Clear"/><br/><br/>
+      <div id="loop">Loop timer?<input type="checkbox" id="loopCheck"/><br/><br/><div id="loopControls"></div></div>
+    </div>
+    <div id="tag">Made by dfsek - Free & open-source forever</div>
+  </body>
+</html>
