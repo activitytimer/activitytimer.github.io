@@ -179,7 +179,7 @@ window.onload = function() {
 		timerTime = timerTime + parseInt(document.getElementById("millisec").innerHTML);
 		startTimer(timerTime);
 		if (document.getElementById("loopTime")) {
-			for (var i = 0; i < parseInt(document.getElementById("loopNumber").value); i++) {
+			for (var i = 0; i < (parseInt(document.getElementById("loopNumber").value) - 1); i++) {
 				console.log("setting loop " + i + " with time " + (i + 1) * (timerTime + parseInt(document.getElementById('loopTime').value) * 1000));
 				timerRepeats.push(setTimeout(function() {
 					startTimer(timerTime);
