@@ -1,7 +1,7 @@
 var completed = true;
 var timerRepeats = [];
 var timerTime = 0;
-
+var saves = [];
 
 function setCookie(cname, cvalue, exdays) {
 	var d = new Date();
@@ -23,7 +23,30 @@ function getCookie(cname) {
 			return c.substring(name.length, c.length);
 		}
 	}
-	return "";
+	return null;
+}
+
+function eraseCookie(name) {
+	document.cookie = name + '=; Max-Age=-99999999;';
+}
+
+function updateSaves() {
+	var complete = false;
+	var save = 0;
+	var maxSaves = 50;
+	document.getElementById("saveSel").innerHTML = "<option value='null'></option>";
+	saves = [];
+	while (complete = true && save <= maxSaves) {
+		if (getCookie("save(" + save + ")") !== null) {
+			var saveJSON = JSON.parse(getCookie("save(" + save + ")"));
+			saves.push(saveJSON);
+			document.getElementById("saveSel").innerHTML = document.getElementById("saveSel").innerHTML + "<option value='" + saveJSON.id + "'>" + saveJSON.name + " (" + (parseInt(saveJSON.id) + 1) + ")" + "</option>";
+		} else {
+			complete = false;
+		}
+		console.log(save);
+		save = save + 1;
+	}
 }
 
 function msToTime(duration) {
@@ -52,6 +75,7 @@ function saveAs(id) {
 	if (document.getElementById('loopTime')) {
 		save = {
 			"id": id,
+			"name": document.getElementById('saveName').value,
 			"time": timerTime,
 			"loop": {
 				"enable": loop,
@@ -62,6 +86,7 @@ function saveAs(id) {
 	} else {
 		save = {
 			"id": id,
+			"name": document.getElementById('saveName').value,
 			"time": timerTime,
 			"loop": {
 				"enable": loop,
@@ -78,11 +103,14 @@ function saveAs(id) {
 function loadSave(id) {
 	if (getCookie("save(" + id + ")")) {
 		var save = JSON.parse(getCookie("save(" + id + ")"));
-		console.log(save.toString());
+		console.log(save);
 		if (save.loop.enable === true) {
 			document.getElementById("loopCheck").checked = true;
 			document.getElementById("loopControls").innerHTML = "Time between loops (seconds): <input id='loopTime' value='" + save.loop.loopTime + "' type='number' min='0.5' step='0.5'/><br/>";
 			document.getElementById("loopControls").innerHTML = document.getElementById("loopControls").innerHTML + "Number of times to loop: <input id='loopNumber' value='" + save.loop.loopNumber + "' type='number' min='2' step='1'/>";
+		} else {
+			document.getElementById("loopCheck").checked = false;
+			document.getElementById("loopControls").innerHTML = "";
 		}
 		document.getElementById("time").innerHTML = msToTime(save.time);
 	} else {
@@ -190,5 +218,33 @@ window.onload = function() {
 			document.getElementById("loopControls").innerHTML = "";
 		}
 	}
+	saveButton.onclick = function() {
+		updateSaves();
+		var saveNum = 0;
+		for (var j = 0; j < saves.length; j++) {
+			if (saves[j].id === saveNum) {
+				saveNum++;
+				console.log(saveNum);
+			}
+		}
+		saveAs(saveNum);
+		updateSaves();
+	}
+	document.getElementById("deleteSave").onclick = function() {
+		if (confirm('Are you sure you want to permanently delete this configuration?')) {
+			var e = document.getElementById("saveSel");
+			var strSave = e.options[e.selectedIndex].value;
+			eraseCookie("save(" + strSave + ")");
+			console.log(strSave);
+			updateSaves();
+		}
+	}
+	$('#saveSel').change(function() {
+		var val = this.value;
+		if (val !== "null") {
+			loadSave(val);
+		}
+	})
+	updateSaves();
 	console.log("index.js loaded");
 }
